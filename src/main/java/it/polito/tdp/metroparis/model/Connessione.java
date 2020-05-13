@@ -3,6 +3,7 @@ package it.polito.tdp.metroparis.model;
 public class Connessione {
 
 	private int idConnessione;
+	// i 3 campi successivi sono rappresentati da oggetti
 	private Linea linea;
 	private Fermata stazP;
 	private Fermata stazA;

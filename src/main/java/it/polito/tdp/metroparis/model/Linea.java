@@ -1,7 +1,8 @@
 package it.polito.tdp.metroparis.model;
 
 public class Linea {
-
+	
+	//attributi della tabella
 	private int idLinea;
 	private String nome;
 	private double velocita;

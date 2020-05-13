@@ -74,7 +74,8 @@ public class MetroDAO {
 		String sql = "SELECT COUNT(*) AS C " + "FROM connessione " + "WHERE id_stazP=? " + "AND id_stazA=?";
 
 		try {
-			Connection conn = DBConnect.getConnection();
+			Connection conn = DBConnect.getConnection(); 
+			//prendo in pestito una connessione dal connection pool
 			PreparedStatement st = conn.prepareStatement(sql);
 
 			st.setInt(1, fp.getIdFermata());
@@ -87,7 +88,7 @@ public class MetroDAO {
 
 			conn.close();
 
-			return linee >= 1;
+			return linee >= 1; //se linee >=1 ritorna vero
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -98,7 +99,7 @@ public class MetroDAO {
 
 	public List<Fermata> fermateSuccessive(Fermata fp, Map<Integer, Fermata> fermateIdMap) {
 		String sql = "SELECT DISTINCT id_stazA " + "FROM connessione " + "WHERE id_stazP=?";
-
+		//DISTINCT evita di far generare duplicati.
 		List<Fermata> result = new ArrayList<>();
 
 		try {
@@ -112,6 +113,9 @@ public class MetroDAO {
 
 			while (res.next()) {
 				int id_fa = res.getInt("id_stazA"); // ID fermata arrivo
+				//voglio convertire l'ID della fermata di arrivonella fermata
+				//poichè conosco già l'elenco delle fermate nel MODEL
+				// rendo l'oggetto accessibile tramite un'IDMap
 				result.add(fermateIdMap.get(id_fa));
 			}
 
@@ -127,7 +131,7 @@ public class MetroDAO {
 
 	public List<CoppiaFermate> coppieFermate(Map<Integer, Fermata> fermateIdMap) {
 		String sql = "SELECT DISTINCT id_stazP, id_stazA FROM connessione" ;
-		
+		//DISTINCT elimina gli archi presenti su linee diverse
 		List<CoppiaFermate> result = new ArrayList<>();
 		
 		try {
